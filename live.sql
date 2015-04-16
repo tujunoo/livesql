@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50169
 File Encoding         : 65001
 
-Date: 2015-04-16 17:18:47
+Date: 2015-04-16 19:03:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `tbl_banner` (
 -- ----------------------------
 -- Records of tbl_banner
 -- ----------------------------
-INSERT INTO `tbl_banner` VALUES ('1125', '21321312', '', '', '', '', 'all', null, '0', '2015-04-16 16:27:46', '2015-04-16 00:00:00', '2015-04-16 00:00:00', '0000-00-00 00:00:00', '1', '1', '0', '');
+INSERT INTO `tbl_banner` VALUES ('1125', '21321312', '', '', 'test_aaa_1', '', 'all', null, '0', '2015-04-16 19:02:45', '2015-04-16 00:00:00', '2015-04-16 00:00:00', '0000-00-00 00:00:00', '1', '1', '0', '');
 INSERT INTO `tbl_banner` VALUES ('1126', '21321312', '', '', '', '', 'all', null, '0', '2015-04-16 16:29:29', '2015-04-16 00:00:00', '2015-04-16 00:00:00', '0000-00-00 00:00:00', '1', '1', '0', '');
 
 -- ----------------------------
@@ -118,6 +118,50 @@ CREATE TABLE `tbl_comment` (
 -- Records of tbl_comment
 -- ----------------------------
 INSERT INTO `tbl_comment` VALUES ('1', 'This is a test comment.', '2', '1230952187', 'Tester', 'tester@example.com', null, '2');
+
+-- ----------------------------
+-- Table structure for `tbl_configuration`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_configuration`;
+CREATE TABLE `tbl_configuration` (
+  `configuration_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) NOT NULL,
+  `key` varchar(128) NOT NULL,
+  `value` text NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `configuration_group_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`configuration_id`),
+  UNIQUE KEY `configuration_key_index` (`key`),
+  KEY `configuration_sort_order_index` (`sort_order`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_configuration
+-- ----------------------------
+INSERT INTO `tbl_configuration` VALUES ('1', '测试', 'PRIVATE_TOURS_CUSTOMER_SERVICE_CONTACT', '{\r\n\"13122\":\"123456\",\r\n\"16\":\"123456\",\r\n\"15\":\"123456\",\r\n\"5\":\"123456\",\r\n\"253\":\"111111\",\r\n\"13132\":\"13438281783\",\r\n\"42\":\"123456\"\r\n}', '描述', '1', '2015-04-16 10:46:51', '2015-04-16 10:46:51', '999');
+
+-- ----------------------------
+-- Table structure for `tbl_configuration_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_configuration_group`;
+CREATE TABLE `tbl_configuration_group` (
+  `configuration_group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`configuration_group_id`),
+  KEY `configuration_group_sort_order_index` (`sort_order`)
+) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_configuration_group
+-- ----------------------------
+INSERT INTO `tbl_configuration_group` VALUES ('1', 'My Store', 'General information about my store', '1', '1');
+INSERT INTO `tbl_configuration_group` VALUES ('999', 'Homepage Config', 'Homepage Configurations', '1', '0');
 
 -- ----------------------------
 -- Table structure for `tbl_language`
