@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50169
 File Encoding         : 65001
 
-Date: 2015-04-16 19:03:45
+Date: 2015-04-17 17:05:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -162,6 +162,84 @@ CREATE TABLE `tbl_configuration_group` (
 -- ----------------------------
 INSERT INTO `tbl_configuration_group` VALUES ('1', 'My Store', 'General information about my store', '1', '1');
 INSERT INTO `tbl_configuration_group` VALUES ('999', 'Homepage Config', 'Homepage Configurations', '1', '0');
+
+-- ----------------------------
+-- Table structure for `tbl_customer`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_customer`;
+CREATE TABLE `tbl_customer` (
+  `customer_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `email_secret` tinyint(1) NOT NULL DEFAULT '0',
+  `fmg_account_ask_flag` int(11) NOT NULL DEFAULT '0',
+  `first_name` varchar(32) NOT NULL,
+  `last_name` varchar(32) NOT NULL,
+  `chinese_name` varchar(32) DEFAULT NULL,
+  `gender` char(1) NOT NULL DEFAULT '',
+  `dob` date NOT NULL COMMENT 'Date of Birth',
+  `dob_secret` tinyint(1) NOT NULL DEFAULT '0',
+  `phone` varchar(32) NOT NULL,
+  `normalized_phone` varchar(32) DEFAULT NULL,
+  `phone_secret` tinyint(1) NOT NULL DEFAULT '0',
+  `fax` varchar(64) DEFAULT NULL,
+  `cell` varchar(72) NOT NULL COMMENT 'Cellular phone',
+  `normalized_cell` varchar(32) DEFAULT NULL,
+  `cell_confirm` varchar(16) DEFAULT NULL,
+  `password` varchar(40) NOT NULL,
+  `vip_code` varchar(10) DEFAULT NULL,
+  `remark` tinytext,
+  `face` varchar(128) DEFAULT NULL,
+  `referer_url` varchar(255) DEFAULT NULL,
+  `referer_type` tinyint(4) DEFAULT NULL,
+  `charset` varchar(8) DEFAULT NULL,
+  `shopping_points` decimal(10,2) NOT NULL,
+  `credit_issued_amt` decimal(10,2) NOT NULL,
+  `point_expire` date DEFAULT NULL,
+  `experience_expire` date DEFAULT NULL,
+  `experience` int(10) unsigned NOT NULL DEFAULT '0',
+  `validation_code` varchar(8) DEFAULT NULL,
+  `validation` tinyint(1) NOT NULL DEFAULT '0',
+  `newsletter` tinyint(4) DEFAULT NULL,
+  `standalone` tinyint(4) NOT NULL DEFAULT '1',
+  `dealalert` tinyint(4) NOT NULL DEFAULT '1',
+  `is_newsletter_cruise` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Cruises newsletter subscription',
+  `is_travel_agent` tinyint(1) NOT NULL DEFAULT '0',
+  `space_public` tinyint(1) NOT NULL DEFAULT '0',
+  `email_validation_point` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `cim_profile_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'CIM Profile ID, not an FK',
+  `purchased_without_account` tinyint(1) NOT NULL DEFAULT '0',
+  `is_accept_sms_news` tinyint(1) NOT NULL DEFAULT '1',
+  `fb_uid` bigint(20) unsigned DEFAULT NULL COMMENT 'Facebook User ID',
+  `recommend_customer_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `default_address_id` int(10) unsigned NOT NULL,
+  `store_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`customer_id`),
+  KEY `fk_customer_store` (`store_id`),
+  KEY `customer_fb_uid_index` (`fb_uid`),
+  KEY `customer_email_index` (`email`),
+  KEY `customer_normalized_phone_index` (`normalized_phone`),
+  KEY `customer_normalized_cell_index` (`normalized_cell`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tbl_customer
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tbl_customer_shopping_point`
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_customer_shopping_point`;
+CREATE TABLE `tbl_customer_shopping_point` (
+  `customer_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `shopping_points` decimal(10,2) NOT NULL,
+  `store_id` int(10) unsigned NOT NULL,
+  `point_expire` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of tbl_customer_shopping_point
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tbl_language`
